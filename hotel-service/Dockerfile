@@ -3,6 +3,7 @@ WORKDIR /app
 COPY pom.xml ./pom.xml
 COPY hotel-service/pom.xml ./hotel-service/pom.xml
 COPY hotel-service/src ./hotel-service/src
+COPY checkstyle.xml ./checkstyle.xml
 RUN mvn clean package -DskipTests -f hotel-service/pom.xml
 
 FROM eclipse-temurin:17-jre-alpine

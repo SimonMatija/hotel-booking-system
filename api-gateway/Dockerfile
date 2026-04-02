@@ -3,6 +3,7 @@ WORKDIR /app
 COPY pom.xml ./pom.xml
 COPY api-gateway/pom.xml ./api-gateway/pom.xml
 COPY api-gateway/src ./api-gateway/src
+COPY checkstyle.xml ./checkstyle.xml
 RUN mvn clean package -DskipTests -f api-gateway/pom.xml
 
 FROM eclipse-temurin:17-jre-alpine
