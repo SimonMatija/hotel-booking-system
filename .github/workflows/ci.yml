@@ -51,6 +51,18 @@ jobs:
       - name: Test booking-service
         run: mvn test -f booking-service/pom.xml
 
+      - name: Run Checkstyle user-service
+        run: mvn checkstyle:check -f user-service/pom.xml
+
+      - name: Run Checkstyle hotel-service
+        run: mvn checkstyle:check -f hotel-service/pom.xml
+
+      - name: Run Checkstyle booking-service
+        run: mvn checkstyle:check -f booking-service/pom.xml
+
+      - name: Run Checkstyle notification-service
+        run: mvn checkstyle:check -f notification-service/pom.xml
+
       - name: Docker build user-service
         run: docker build -t user-service:latest -f user-service/Dockerfile .
 
