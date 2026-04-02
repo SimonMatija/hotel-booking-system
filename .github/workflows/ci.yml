@@ -1,0 +1,67 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build user-service
+        run: mvn clean package -DskipTests -f user-service/pom.xml
+
+      - name: Build hotel-service
+        run: mvn clean package -DskipTests -f hotel-service/pom.xml
+
+      - name: Build booking-service
+        run: mvn clean package -DskipTests -f booking-service/pom.xml
+
+      - name: Build notification-service
+        run: mvn clean package -DskipTests -f notification-service/pom.xml
+
+      - name: Build api-gateway
+        run: mvn clean package -DskipTests -f api-gateway/pom.xml
+
+      - name: Test user-service
+        run: mvn test -f user-service/pom.xml
+
+      - name: Test hotel-service
+        run: mvn test -f hotel-service/pom.xml
+
+      - name: Test booking-service
+        run: mvn test -f booking-service/pom.xml
+
+      - name: Docker build user-service
+        run: docker build -t user-service:latest ./user-service
+
+      - name: Docker build hotel-service
+        run: docker build -t hotel-service:latest ./hotel-service
+
+      - name: Docker build booking-service
+        run: docker build -t booking-service:latest ./booking-service
+
+      - name: Docker build notification-service
+        run: docker build -t notification-service:latest ./notification-service
+
+      - name: Docker build api-gateway
+        run: docker build -t api-gateway:latest ./api-gateway
