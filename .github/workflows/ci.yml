@@ -52,16 +52,16 @@ jobs:
         run: mvn test -f booking-service/pom.xml
 
       - name: Docker build user-service
-        run: docker build -t user-service:latest ./user-service
+        run: docker build -t user-service:latest -f user-service/Dockerfile .
 
       - name: Docker build hotel-service
-        run: docker build -t hotel-service:latest ./hotel-service
+        run: docker build -t hotel-service:latest -f hotel-service/Dockerfile .
 
       - name: Docker build booking-service
-        run: docker build -t booking-service:latest ./booking-service
+        run: docker build -t booking-service:latest -f booking-service/Dockerfile .
 
       - name: Docker build notification-service
-        run: docker build -t notification-service:latest ./notification-service
+        run: docker build -t notification-service:latest -f notification-service/Dockerfile .
 
       - name: Docker build api-gateway
-        run: docker build -t api-gateway:latest ./api-gateway
+        run: docker build -t api-gateway:latest -f api-gateway/Dockerfile .
