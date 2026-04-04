@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import static io.restassured.RestAssured.given;
@@ -15,6 +16,9 @@ class BookingServiceE2ETest {
 
     @LocalServerPort
     private int port;
+
+    @MockBean
+    private RabbitMQSender rabbitMQSender;
 
     @BeforeEach
     void setUp() {
